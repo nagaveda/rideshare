@@ -1,16 +1,16 @@
 # Progress
 
 ## Phase 1: Project Foundation
-- [ ] Spring Boot project scaffolding with Maven
-- [ ] Add dependencies (Spring Web, JPA, Security, Kafka, Redis, PostGIS, Flyway, Lombok, etc.)
-- [ ] Docker Compose for PostgreSQL/PostGIS, Redis, Kafka + Zookeeper
-- [ ] Application properties (dev profile)
-- [ ] Flyway migrations for all database tables
-- [ ] BaseEntity (id, createdAt, updatedAt)
-- [ ] ApiResponse wrapper class
-- [ ] GlobalExceptionHandler with custom exceptions
-- [ ] CORS configuration
-- [ ] Swagger/OpenAPI configuration
+- [x] Spring Boot project scaffolding with Maven
+- [x] Add dependencies (Spring Web, JPA, Security, Kafka, Redis, PostGIS, Flyway, Lombok, etc.)
+- [x] Docker Compose for PostgreSQL/PostGIS, Redis, Kafka (KRaft)
+- [x] Application properties (dev profile)
+- [x] Flyway migrations for all database tables
+- [x] BaseEntity (id, createdAt, updatedAt)
+- [x] ApiResponse wrapper class
+- [x] GlobalExceptionHandler with custom exceptions
+- [x] CORS configuration
+- [x] Swagger/OpenAPI configuration
 
 ## Phase 2: User & Auth
 - [ ] User entity and UserRepository
