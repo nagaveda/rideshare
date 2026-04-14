@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: rideshare
+
+  # Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rideshare
+    username: rideshare
+    password: rideshare
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
+    open-in-view: false
+
+  # Flyway
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  # Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: rideshare-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.rideshare.*
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:default-dev-secret-key-change-in-production-must-be-at-least-256-bits-long}
+  expiration-ms: 86400000  # 24 hours
+
+# Server
+server:
+  port: 8080
+
+# Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
