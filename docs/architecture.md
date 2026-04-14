@@ -242,6 +242,19 @@ com.rideshare
 
 **Constraint:** Unique on (ride_id, rater_id) — one rating per person per ride.
 
+### ride_events (audit log)
+| Column | Type | Notes |
+|--------|------|-------|
+| id | UUID | PK |
+| ride_id | UUID | FK → rides |
+| rider_id | UUID | FK → users |
+| driver_id | UUID | FK → users, nullable |
+| status | VARCHAR(20) | The new ride status |
+| metadata | JSONB | Flexible — cancellation reason, fare info, etc. |
+| created_at | TIMESTAMP | |
+
+Populated by the Kafka consumer listening to the `ride-events` topic. Provides a full audit trail of every ride state change.
+
 ## Ride State Machine
 
 ```
@@ -278,7 +291,7 @@ CANCELLED → terminal state
 
 ### `ride-events`
 - **Producer:** RideService (on any ride state change)
-- **Consumer:** Could be used for analytics, notifications, surge metric updates
+- **Consumer:** RideEventConsumer → writes audit log to `ride_events` table. Future: notifications, surge metrics
 - **Key:** rideId
 - **Payload:** `{rideId, riderId, driverId, status, timestamp, metadata}`
 

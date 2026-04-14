@@ -168,9 +168,12 @@ Granular task list for implementation. Each item is a single commit-sized unit o
   - cancelRide() — status → CANCELLED, set reason, release driver if assigned
 - [ ] State transition validation (can only go from valid states)
 
-### 5.4 Ride Events
+### 5.4 Ride Events & Audit Log
 - [ ] RideEventProducer — publish state changes to "ride-events" Kafka topic
 - [ ] Ride event published on every state transition
+- [ ] Flyway migration V8: `ride_events` table (ride_id, rider_id, driver_id, status, metadata JSONB, created_at)
+- [ ] RideEvent entity and RideEventRepository
+- [ ] RideEventConsumer — listens to "ride-events" topic, writes audit log to ride_events table
 
 ### 5.5 Ride Controller
 - [ ] POST /api/v1/rides/request — rider requests ride

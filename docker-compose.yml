@@ -38,7 +38,21 @@ services:
     volumes:
       - kafka-data:/var/kafka/data
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: rideshare-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@rideshare.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
 volumes:
   postgres-data:
   redis-data:
   kafka-data:
+  pgadmin-data:

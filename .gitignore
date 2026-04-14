@@ -26,6 +26,9 @@ Thumbs.db
 .env
 *.env.local
 
+# Sensitive docs
+docs/pgadmin-setup.md
+
 # Logs
 *.log
 logs/
