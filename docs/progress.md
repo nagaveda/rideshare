@@ -13,16 +13,16 @@
 - [x] Swagger/OpenAPI configuration
 
 ## Phase 2: User & Auth
-- [ ] User entity and UserRepository
-- [ ] RegisterRequest / LoginRequest / AuthResponse DTOs
-- [ ] AuthService (register, login)
-- [ ] JwtService (generate, validate, extract claims)
-- [ ] JwtAuthenticationFilter
-- [ ] SecurityConfig (permit auth endpoints, protect the rest)
-- [ ] AuthController (POST /register, POST /login)
-- [ ] DriverProfile entity and DriverProfileRepository
-- [ ] DriverService + DriverController (profile CRUD, status update)
-- [ ] Rider profile endpoints
+- [x] User entity and UserRepository
+- [x] RegisterRequest / LoginRequest / AuthResponse DTOs
+- [x] AuthService (register, login)
+- [x] JwtService (generate, validate, extract claims)
+- [x] JwtAuthenticationFilter
+- [x] SecurityConfig (permit auth endpoints, protect the rest)
+- [x] AuthController (POST /register, POST /login)
+- [x] DriverProfile entity and DriverProfileRepository
+- [x] DriverService + DriverController (profile CRUD, status update)
+- [x] Rider profile endpoints
 
 ## Phase 3: Location Tracking
 - [ ] KafkaProducerConfig and KafkaConsumerConfig
@@ -51,6 +51,8 @@
 - [ ] RideService (request, cancel, state transitions)
 - [ ] MatchingService (find nearest driver, retry logic, radius expansion)
 - [ ] RideEventProducer (publish ride state changes to Kafka)
+- [ ] RideEvent entity + Flyway migration for ride_events audit log table
+- [ ] RideEventConsumer (Kafka → write audit log to ride_events table)
 - [ ] RideController (request, accept, start, complete, cancel, get status)
 - [ ] Driver location polling endpoint for rider (GET ride driver location)
 - [ ] Ride history endpoints (rider + driver)
