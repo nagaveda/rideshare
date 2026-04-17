@@ -34,7 +34,7 @@ public class DriverController {
     @PutMapping("/profile")
     public ResponseEntity<ApiResponse<DriverProfileResponse>> updateProfile(
             @AuthenticationPrincipal UUID userId,
-            @RequestBody UpdateDriverProfileRequest request) {
+            @Valid @RequestBody UpdateDriverProfileRequest request) {
         return ResponseEntity.ok(ApiResponse.ok(driverService.updateProfile(userId, request)));
     }
 
