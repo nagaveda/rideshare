@@ -151,6 +151,7 @@ Granular task list for implementation. Each item is a single commit-sized unit o
 ### 5.2 Matching Service
 - [ ] MatchingService:
   - Query Redis GEO for nearby drivers → filter by AVAILABLE status in PostGIS
+  - Redis GEO fallback: if Redis is unavailable, query PostGIS directly (ST_DWithin + ST_Distance)
   - Closest-first selection
   - Timeout handling (30s per driver)
   - Radius expansion logic (3km → 5km → 10km)

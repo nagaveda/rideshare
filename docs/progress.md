@@ -25,15 +25,15 @@
 - [x] Rider profile endpoints
 
 ## Phase 3: Location Tracking
-- [ ] KafkaProducerConfig and KafkaConsumerConfig
-- [ ] LocationUpdateRequest DTO
-- [ ] LocationProducer (publish to "driver-location-updates" topic)
-- [ ] LocationController (POST /drivers/location)
-- [ ] DriverLocation entity with PostGIS Point geometry
-- [ ] DriverLocationRepository with spatial query methods
-- [ ] LocationConsumer (Kafka → write to PostGIS + Redis GEO)
-- [ ] RedisConfig with GEO operations
-- [ ] Redis driver TTL management (active driver tracking)
+- [x] KafkaProducerConfig and KafkaConsumerConfig
+- [x] LocationUpdateRequest DTO
+- [x] LocationProducer (publish to "driver-location-updates" topic)
+- [x] LocationController (POST /drivers/location)
+- [x] DriverLocation entity with PostGIS Point geometry
+- [x] DriverLocationRepository with spatial query methods
+- [x] LocationConsumer (Kafka → write to PostGIS + Redis GEO)
+- [x] RedisConfig with GEO operations
+- [x] Redis driver TTL management (active driver tracking)
 
 ## Phase 4: Pricing Engine
 - [ ] SurgePricingStrategy interface

@@ -353,8 +353,11 @@ The active strategy is selected at runtime (e.g., via config or contextual logic
 2. Set searchRadius = 3km, attempt = 0, maxAttempts = 3
 
 3. LOOP:
-   a. Query Redis GEOSEARCH within searchRadius → candidate driverIds
-   b. For candidates, query PostGIS to confirm:
+   a. Try Redis GEOSEARCH within searchRadius → candidate driverIds
+      - If Redis is unavailable (connection error/timeout):
+        fall back to PostGIS-only query (ST_DWithin + status = AVAILABLE)
+        Skip step (b) since PostGIS already filters and orders
+   b. For candidates from Redis, query PostGIS to confirm:
       - status = AVAILABLE
       - precise distance ordering
    c. If no candidates:
@@ -372,6 +375,12 @@ The active strategy is selected at runtime (e.g., via config or contextual logic
 
 4. If all attempts exhausted → return "no drivers available"
 ```
+
+> **Redis GEO fallback:** Redis is the fast path for proximity queries, but PostGIS
+> is the durable fallback. If Redis is down, MatchingService queries PostGIS directly
+> using `ST_DWithin` + `ST_Distance` with the GiST index. This is slower (~5-10ms vs
+> sub-millisecond) but functionally equivalent. The dual-write design (every location
+> update writes to both stores) ensures PostGIS always has current driver positions.
 
 ## API Response Wrapper
 
