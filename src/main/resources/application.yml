@@ -51,6 +51,16 @@ jwt:
 server:
   port: 8080
 
+# Pricing
+pricing:
+  base-rate: 2.50
+  per-km: 1.50
+  per-minute: 0.25
+  minimum-fare: 5.00
+  surge:
+    max-multiplier: 3.0
+    min-supply: 1
+
 # Swagger
 springdoc:
   api-docs:

@@ -36,13 +36,13 @@
 - [x] Redis driver TTL management (active driver tracking)
 
 ## Phase 4: Pricing Engine
-- [ ] SurgePricingStrategy interface
-- [ ] DemandSupplyRatioStrategy (reads from Redis demand/supply counters)
-- [ ] TimeBasedSurgeStrategy (peak hour multipliers)
-- [ ] SurgeService (manage Redis demand/supply counters)
-- [ ] FareCalculator service (base fare + surge)
-- [ ] FareEstimate DTO
-- [ ] Fare estimation endpoint (POST /rides/estimate)
+- [x] SurgePricingStrategy interface
+- [x] DemandSupplyRatioStrategy (reads from Redis demand/supply counters)
+- [x] TimeBasedSurgeStrategy (peak hour multipliers)
+- [x] SurgeService (manage Redis demand/supply counters)
+- [x] FareCalculator service (base fare + surge)
+- [x] FareEstimate DTO
+- [x] Fare estimation endpoint (POST /rides/estimate)
 
 ## Phase 5: Ride Management
 - [ ] RideStatus enum
