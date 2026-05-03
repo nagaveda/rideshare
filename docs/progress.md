@@ -45,17 +45,17 @@
 - [x] Fare estimation endpoint (POST /rides/estimate)
 
 ## Phase 5: Ride Management
-- [ ] RideStatus enum
-- [ ] Ride entity and RideRepository
-- [ ] RideRoutePoint entity
-- [ ] RideService (request, cancel, state transitions)
-- [ ] MatchingService (find nearest driver, retry logic, radius expansion)
-- [ ] RideEventProducer (publish ride state changes to Kafka)
-- [ ] RideEvent entity + Flyway migration for ride_events audit log table
-- [ ] RideEventConsumer (Kafka → write audit log to ride_events table)
-- [ ] RideController (request, accept, start, complete, cancel, get status)
-- [ ] Driver location polling endpoint for rider (GET ride driver location)
-- [ ] Ride history endpoints (rider + driver)
+- [x] RideStatus enum
+- [x] Ride entity and RideRepository
+- [x] RideRoutePoint entity
+- [x] RideService (request, cancel, state transitions)
+- [x] MatchingService (find nearest driver, retry logic, radius expansion)
+- [x] RideEventProducer (publish ride state changes to Kafka)
+- [x] RideEvent entity + Flyway migration for ride_events audit log table
+- [x] RideEventConsumer (Kafka → write audit log to ride_events table)
+- [x] RideController (request, accept, start, complete, cancel, get status)
+- [x] Driver location polling endpoint for rider (GET ride driver location)
+- [x] Ride history endpoints (rider + driver)
 
 ## Phase 6: Payment & Ratings
 - [ ] Payment entity and PaymentRepository
