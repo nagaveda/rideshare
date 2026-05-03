@@ -7,6 +7,8 @@ import com.rideshare.common.util.GeometryUtils;
 import com.rideshare.driver.model.DriverProfile;
 import com.rideshare.driver.model.DriverStatus;
 import com.rideshare.driver.repository.DriverProfileRepository;
+import com.rideshare.location.model.DriverLocation;
+import com.rideshare.location.repository.DriverLocationRepository;
 import com.rideshare.matching.service.MatchingService;
 import com.rideshare.pricing.dto.FareEstimate;
 import com.rideshare.pricing.service.FareCalculator;
@@ -18,6 +20,8 @@ import com.rideshare.ride.model.Ride;
 import com.rideshare.ride.model.RideStatus;
 import com.rideshare.ride.repository.RideRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +43,7 @@ public class RideService {
 
     private final RideRepository rideRepository;
     private final DriverProfileRepository driverProfileRepository;
+    private final DriverLocationRepository driverLocationRepository;
     private final MatchingService matchingService;
     private final FareCalculator fareCalculator;
     private final SurgeService surgeService;
@@ -187,6 +192,32 @@ public class RideService {
             throw new UnauthorizedException("Not authorized to view this ride");
         }
         return ride;
+    }
+
+    @Transactional(readOnly = true)
+    public DriverLocation getDriverLocationForRide(UUID rideId, UUID riderId) {
+        Ride ride = findRide(rideId);
+        if (!ride.getRiderId().equals(riderId)) {
+            throw new UnauthorizedException("Only the rider can poll driver location");
+        }
+        if (ride.getDriverId() == null) {
+            throw new BadRequestException("No driver assigned to this ride yet");
+        }
+        if (ride.getStatus().isTerminal()) {
+            throw new BadRequestException("Ride is no longer active");
+        }
+        return driverLocationRepository.findByDriverId(ride.getDriverId())
+                .orElseThrow(() -> new ResourceNotFoundException("DriverLocation", "driverId", ride.getDriverId()));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Ride> getRiderHistory(UUID riderId, Pageable pageable) {
+        return rideRepository.findByRiderIdOrderByRequestedAtDesc(riderId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Ride> getDriverHistory(UUID driverId, Pageable pageable) {
+        return rideRepository.findByDriverIdOrderByRequestedAtDesc(driverId, pageable);
     }
 
     private Ride assignDriver(Ride ride, UUID driverId) {
