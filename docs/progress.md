@@ -69,3 +69,8 @@
 - [ ] Integration tests for critical flows (ride request → complete)
 - [ ] WebSocket for real-time ride status + driver location push (stretch)
 - [ ] Load testing / performance validation on PostGIS queries
+
+## Phase 8: Reliability Improvements
+- [x] Optimistic locking on Ride entity (@Version) with 409 Conflict response
+- [x] Idempotency key support on POST /rides/request (Idempotency-Key header)
+- [x] Flyway migration V9 for version and idempotency_key columns

@@ -159,6 +159,11 @@ Get fare estimate before requesting a ride. Requires role `RIDER`.
 ### POST /rides/request
 Request a new ride. Requires role `RIDER`.
 
+**Headers:**
+| Header | Required | Description |
+|---|---|---|
+| `Idempotency-Key` | No | Client-generated unique key (max 64 chars). If provided and a ride with this key already exists for the rider, the original ride is returned instead of creating a new one. Use to safely retry on network failures. |
+
 **Request:**
 ```json
 {
