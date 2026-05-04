@@ -356,7 +356,7 @@ CANCELLED → terminal state
                     │                          │
                     │  + calculateMultiplier(  │
                     │      zone, metrics)      │
-                    │    → double              │
+                    │    → double              │ß
                     └────────┬────────────────┘
                              │
               ┌──────────────┼──────────────┐
