@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -80,4 +81,10 @@ public class Ride extends BaseEntity {
 
     @Column(name = "cancellation_reason", length = 500)
     private String cancellationReason;
+
+    @Version
+    private Long version;
+
+    @Column(name = "idempotency_key", length = 64)
+    private String idempotencyKey;
 }
