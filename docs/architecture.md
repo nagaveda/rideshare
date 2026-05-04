@@ -51,8 +51,8 @@
 com.rideshare
 ├── RideShareApplication.java
 ├── config/
-│   ├── SecurityConfig.java         # Spring Security + JWT filter
-│   ├── JwtConfig.java              # JWT token properties
+│   ├── SecurityConfig.java         # Spring Security filter chain
+│   ├── JwtAuthenticationFilter.java
 │   ├── KafkaProducerConfig.java
 │   ├── KafkaConsumerConfig.java
 │   ├── RedisConfig.java
@@ -66,70 +66,103 @@ com.rideshare
 │   │   ├── ResourceNotFoundException.java
 │   │   ├── BadRequestException.java
 │   │   └── UnauthorizedException.java
-│   └── entity/
-│       └── BaseEntity.java         # id, createdAt, updatedAt
+│   ├── entity/
+│   │   └── BaseEntity.java         # id, createdAt, updatedAt
+│   └── util/
+│       └── GeometryUtils.java      # Haversine + JTS geometry helpers
 ├── user/
-│   ├── controller/AuthController.java
-│   ├── service/AuthService.java
-│   ├── service/JwtService.java
+│   ├── controller/
+│   │   ├── AuthController.java
+│   │   └── RiderController.java
+│   ├── service/
+│   │   ├── AuthService.java
+│   │   ├── JwtService.java
+│   │   └── UserService.java
 │   ├── repository/UserRepository.java
-│   ├── model/User.java
+│   ├── model/
+│   │   ├── User.java
+│   │   └── Role.java               # Enum: RIDER, DRIVER
 │   └── dto/
 │       ├── RegisterRequest.java
 │       ├── LoginRequest.java
-│       └── AuthResponse.java
+│       ├── AuthResponse.java
+│       ├── UpdateProfileRequest.java
+│       └── UserProfileResponse.java
 ├── driver/
 │   ├── controller/DriverController.java
 │   ├── service/DriverService.java
 │   ├── repository/DriverProfileRepository.java
-│   ├── model/DriverProfile.java
+│   ├── model/
+│   │   ├── DriverProfile.java
+│   │   └── DriverStatus.java       # Enum: OFFLINE, AVAILABLE, BUSY
 │   └── dto/
 │       ├── DriverProfileResponse.java
+│       ├── UpdateDriverProfileRequest.java
 │       └── UpdateDriverStatusRequest.java
 ├── location/
 │   ├── controller/LocationController.java
-│   ├── service/LocationService.java
+│   ├── service/DriverLocationRedisService.java
 │   ├── kafka/
 │   │   ├── LocationProducer.java
 │   │   └── LocationConsumer.java
 │   ├── repository/DriverLocationRepository.java
 │   ├── model/DriverLocation.java
-│   └── dto/LocationUpdateRequest.java
+│   └── dto/
+│       ├── LocationUpdateRequest.java
+│       └── LocationEvent.java      # Kafka payload
 ├── matching/
 │   └── service/MatchingService.java
 ├── pricing/
-│   ├── service/FareCalculator.java
+│   ├── controller/PricingController.java
+│   ├── service/
+│   │   ├── FareCalculator.java
+│   │   └── SurgeService.java       # Manages Redis demand/supply counters
 │   ├── strategy/
 │   │   ├── SurgePricingStrategy.java      # Interface
 │   │   ├── DemandSupplyRatioStrategy.java
 │   │   └── TimeBasedSurgeStrategy.java
-│   ├── service/SurgeService.java          # Manages Redis demand/supply counters
-│   └── dto/FareEstimate.java
+│   └── dto/
+│       ├── FareEstimate.java
+│       ├── FareEstimateRequest.java
+│       └── SurgeMetrics.java
 ├── ride/
 │   ├── controller/RideController.java
 │   ├── service/RideService.java
-│   ├── kafka/RideEventProducer.java
-│   ├── repository/RideRepository.java
+│   ├── kafka/
+│   │   ├── RideEventProducer.java
+│   │   └── RideEventConsumer.java
+│   ├── repository/
+│   │   ├── RideRepository.java
+│   │   ├── RideRoutePointRepository.java
+│   │   └── RideEventRepository.java
 │   ├── model/
 │   │   ├── Ride.java
-│   │   ├── RideStatus.java                # Enum
-│   │   └── RideRoutePoint.java
+│   │   ├── RideStatus.java         # Enum + transition logic
+│   │   ├── RideRoutePoint.java
+│   │   └── RideEvent.java          # Audit log entity
 │   └── dto/
 │       ├── RideRequestDto.java
 │       ├── RideResponse.java
-│       └── CancelRideRequest.java
+│       ├── CancelRideRequest.java
+│       ├── DriverLocationResponse.java
+│       └── RideEventPayload.java   # Kafka payload
 ├── payment/
 │   ├── controller/PaymentController.java
 │   ├── service/PaymentService.java
 │   ├── repository/PaymentRepository.java
-│   ├── model/Payment.java
+│   ├── model/
+│   │   ├── Payment.java
+│   │   ├── PaymentMethod.java      # Enum: CASH, CARD
+│   │   └── PaymentStatus.java      # Enum: PENDING, COMPLETED, FAILED, REFUNDED
 │   └── dto/PaymentResponse.java
 └── rating/
     ├── controller/RatingController.java
     ├── service/RatingService.java
     ├── repository/RatingRepository.java
     ├── model/Rating.java
-    └── dto/RateRequest.java
+    └── dto/
+        ├── RatingRequest.java
+        └── RatingResponse.java
 ```
 
 ## Database Schema

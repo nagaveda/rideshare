@@ -2,6 +2,11 @@
 
 Base URL: `/api/v1`
 
+**Authentication:** All endpoints except `/auth/register` and `/auth/login` require a JWT bearer token:
+```
+Authorization: Bearer <token>
+```
+
 All responses follow the standard wrapper:
 ```json
 {
@@ -251,21 +256,58 @@ Paginated ride history. Returns rides for the authenticated user (rider or drive
 ## Payments
 
 ### GET /payments/history
-Paginated payment history for the authenticated user.
+Paginated payment history for the authenticated user. Returns rides they paid for (rider) or earned on (driver).
 
 **Query params:** `page` (default 0), `size` (default 20)
+
+**Response:** `200 OK`
+```json
+{
+  "content": [
+    {
+      "paymentId": "uuid",
+      "rideId": "uuid",
+      "riderId": "uuid",
+      "driverId": "uuid",
+      "amount": 18.75,
+      "baseFare": 12.50,
+      "surgeAmount": 6.25,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "createdAt": "2026-04-13T10:45:00"
+    }
+  ],
+  "totalElements": 42,
+  "totalPages": 3,
+  "number": 0,
+  "size": 20
+}
+```
 
 ---
 
 ## Ratings
 
 ### POST /rides/{id}/rate
-Submit a rating after ride completion. Both rider and driver can rate each other.
+Submit a rating after ride completion. Both rider and driver can rate each other. The ratee is determined automatically from ride membership — caller does not specify who they are rating.
 
 **Request:**
 ```json
 {
   "score": 5,
   "comment": "Great ride!"
+}
+```
+
+**Response:** `201 Created`
+```json
+{
+  "ratingId": "uuid",
+  "rideId": "uuid",
+  "raterId": "uuid",
+  "rateeId": "uuid",
+  "score": 5,
+  "comment": "Great ride!",
+  "createdAt": "2026-04-13T10:50:00"
 }
 ```
