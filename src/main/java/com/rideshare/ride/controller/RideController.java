@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,9 @@ public class RideController {
     @PreAuthorize("hasRole('RIDER')")
     public ResponseEntity<ApiResponse<RideResponse>> requestRide(
             @AuthenticationPrincipal UUID riderId,
+            @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey,
             @Valid @RequestBody RideRequestDto request) {
+        request.setIdempotencyKey(idempotencyKey);
         Ride ride = rideService.requestRide(riderId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(RideResponse.from(ride)));
     }

@@ -21,4 +21,6 @@ public interface RideRepository extends JpaRepository<Ride, UUID> {
     Page<Ride> findByRiderIdOrderByRequestedAtDesc(UUID riderId, Pageable pageable);
 
     Page<Ride> findByDriverIdOrderByRequestedAtDesc(UUID driverId, Pageable pageable);
+
+    Optional<Ride> findByRiderIdAndIdempotencyKey(UUID riderId, String idempotencyKey);
 }

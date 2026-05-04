@@ -36,4 +36,7 @@ public class RideRequestDto {
 
     @Size(max = 500)
     private String dropoffAddress;
+
+    @Size(max = 64)
+    private String idempotencyKey;
 }

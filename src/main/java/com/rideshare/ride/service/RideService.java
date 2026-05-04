@@ -53,6 +53,15 @@ public class RideService {
 
     @Transactional
     public Ride requestRide(UUID riderId, RideRequestDto request) {
+        // Return existing ride if this is a retry with the same idempotency key
+        if (request.getIdempotencyKey() != null) {
+            Optional<Ride> existing = rideRepository.findByRiderIdAndIdempotencyKey(riderId, request.getIdempotencyKey());
+            if (existing.isPresent()) {
+                log.info("Idempotent request detected for key {}, returning existing ride {}", request.getIdempotencyKey(), existing.get().getId());
+                return existing.get();
+            }
+        }
+
         // Reject if rider already has an active ride
         Optional<Ride> activeRide = rideRepository.findFirstByRiderIdAndStatusNotInOrderByRequestedAtDesc(
                 riderId, TERMINAL_STATUSES);
@@ -79,6 +88,7 @@ public class RideService {
                 .distanceKm(BigDecimal.valueOf(estimate.getDistanceKm()))
                 .durationMinutes(BigDecimal.valueOf(estimate.getDurationMinutes()))
                 .requestedAt(LocalDateTime.now())
+                .idempotencyKey(request.getIdempotencyKey())
                 .build();
 
         ride = rideRepository.save(ride);
