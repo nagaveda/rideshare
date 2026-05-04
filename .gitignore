@@ -27,7 +27,9 @@ Thumbs.db
 *.env.local
 
 # docs
-docs/
+docs/*
+!docs/architecture.md
+!docs/api-docs.md
 # Logs
 *.log
 logs/

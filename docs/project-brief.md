@@ -1,4 +1,0 @@
-Distributed Ride-Sharing Backend | Spring Boot, Kafka, Redis, PostGIS
-• Built a ride-sharing backend handling real-time driver-rider matching at scale — streaming live GPS updates through Kafka into a dual-store (Redis GEO for sub-millisecond lookups, PostGIS with GiST indexes as durable fallback), with automatic failover between the two.
-• Engineered a dynamic surge pricing engine using the Strategy Pattern — reads live rider demand vs. driver supply from Redis atomic counters and adjusts fares in real time; ride-booking APIs are idempotent (partial unique index) with optimistic locking to safely handle concurrent requests.
-• Designed for production scale: stateless services for horizontal scaling, Kafka consumer groups with per-driver ordering guarantees, TTL-based Redis driver eviction, and a full Kafka-backed audit trail of every ride state transition.
