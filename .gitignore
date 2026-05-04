@@ -28,6 +28,7 @@ Thumbs.db
 
 # Sensitive docs
 docs/pgadmin-setup.md
+docs/INTERVIEW-PREP.md
 
 # Logs
 *.log
