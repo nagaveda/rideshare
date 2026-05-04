@@ -10,6 +10,7 @@ import com.rideshare.driver.repository.DriverProfileRepository;
 import com.rideshare.location.model.DriverLocation;
 import com.rideshare.location.repository.DriverLocationRepository;
 import com.rideshare.matching.service.MatchingService;
+import com.rideshare.payment.service.PaymentService;
 import com.rideshare.pricing.dto.FareEstimate;
 import com.rideshare.pricing.service.FareCalculator;
 import com.rideshare.pricing.service.SurgeService;
@@ -48,6 +49,7 @@ public class RideService {
     private final FareCalculator fareCalculator;
     private final SurgeService surgeService;
     private final RideEventProducer rideEventProducer;
+    private final PaymentService paymentService;
 
     @Transactional
     public Ride requestRide(UUID riderId, RideRequestDto request) {
@@ -154,6 +156,7 @@ public class RideService {
         setDriverStatus(driverId, DriverStatus.AVAILABLE);
 
         ride = rideRepository.save(ride);
+        paymentService.createPaymentForRide(ride);
         publishEvent(ride, null);
         return ride;
     }
