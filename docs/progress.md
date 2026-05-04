@@ -58,12 +58,12 @@
 - [x] Ride history endpoints (rider + driver)
 
 ## Phase 6: Payment & Ratings
-- [ ] Payment entity and PaymentRepository
-- [ ] PaymentService (create payment on ride completion)
-- [ ] PaymentController (payment history)
-- [ ] Rating entity and RatingRepository
-- [ ] RatingService (submit rating, update running average on profiles)
-- [ ] RatingController (POST rating after ride)
+- [x] Payment entity and PaymentRepository
+- [x] PaymentService (create payment on ride completion)
+- [x] PaymentController (payment history)
+- [x] Rating entity and RatingRepository
+- [x] RatingService (submit rating, update running average on profiles)
+- [x] RatingController (POST rating after ride)
 
 ## Phase 7: Polish & Enhancements
 - [ ] Integration tests for critical flows (ride request → complete)
