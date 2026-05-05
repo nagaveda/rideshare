@@ -57,6 +57,7 @@ pricing:
   per-km: 1.50
   per-minute: 0.25
   minimum-fare: 5.00
+  average-speed-kmh: 30.0
   surge:
     max-multiplier: 3.0
     min-supply: 1
