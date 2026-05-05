@@ -16,7 +16,6 @@ import java.math.RoundingMode;
 public class FareCalculator {
 
     private static final double EARTH_RADIUS_KM = 6371.0;
-    private static final double AVERAGE_SPEED_KMH = 30.0; // Assumed city driving speed
 
     private final SurgeService surgeService;
     private final SurgePricingStrategy surgePricingStrategy;
@@ -33,6 +32,9 @@ public class FareCalculator {
     @Value("${pricing.minimum-fare:5.00}")
     private double minimumFare;
 
+    @Value("${pricing.average-speed-kmh:30.0}")
+    private double averageSpeedKmh;
+
     public FareCalculator(SurgeService surgeService,
                           @Qualifier("demandSupplyRatioStrategy") SurgePricingStrategy surgePricingStrategy) {
         this.surgeService = surgeService;
@@ -45,7 +47,7 @@ public class FareCalculator {
     public FareEstimate estimate(double pickupLng, double pickupLat,
                                   double dropoffLng, double dropoffLat) {
         double distanceKm = haversineDistance(pickupLat, pickupLng, dropoffLat, dropoffLng);
-        double durationMinutes = (distanceKm / AVERAGE_SPEED_KMH) * 60.0;
+        double durationMinutes = (distanceKm / averageSpeedKmh) * 60.0;
 
         String zone = surgeService.resolveZone(pickupLng, pickupLat);
         SurgeMetrics metrics = surgeService.getMetrics(zone);
